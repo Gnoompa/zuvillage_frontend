@@ -2,7 +2,7 @@
 
 import OnchainConfig from "@/configs/onchain";
 import VillageContractABI from "@/contracts/Village.json";
-import { TVillage } from "@/types/onchain";
+import { TVillageMetadata } from "@/types/onchain";
 import { useEffect, useState } from "react";
 import { useContractRead } from "wagmi";
 
@@ -15,11 +15,13 @@ export default function Home() {
     enabled: true,
   });
 
-  const [villageNftMetadata, setVillageNftMetadata] = useState<TVillage[]>();
+  const [villageNftMetadata, setVillageNftMetadata] =
+    useState<TVillageMetadata[]>();
 
   useEffect(() => {
     villages &&
       setVillageNftMetadata(
+        // @ts-ignore
         villages.map((data) => JSON.parse(atob(data.substring(29))))
       );
   }, [villages]);
@@ -44,7 +46,7 @@ export default function Home() {
                 boxShadow:
                   "rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px",
               }}
-              src={villageMetadata.image}
+              src={villageMetadata.image!}
             ></img>
           </div>
         ))}

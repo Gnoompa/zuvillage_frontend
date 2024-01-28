@@ -24,3 +24,7 @@ export type TVillage = {
   pollinationScore: number;
   permitCount: number;
 };
+
+export type TVillageMetadata = {
+  image: string;
+};
