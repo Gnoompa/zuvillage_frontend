@@ -154,8 +154,7 @@ export default function Home() {
       }}
     >
       <ConnectKitButton />
-      {/* {isConnectedAddressAVillageHead === true ? ( */}
-      {true === true ? (
+      {isConnectedAddressAVillageHead === true ? (
         <div
           style={{
             display: "flex",
