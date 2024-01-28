@@ -19,7 +19,7 @@ export default function Home() {
     abi: VillageContractABI.abi,
     functionName: "tokenURIs",
     args: [
-      Array(Number(villagesTotalSupply))
+      Array(Number(villagesTotalSupply) || 0)
         .fill(null)
         .map((_, i) => i + 1),
     ],
