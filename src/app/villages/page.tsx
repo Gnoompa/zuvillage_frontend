@@ -7,16 +7,33 @@ import { useEffect, useState } from "react";
 import { useContractRead } from "wagmi";
 
 export default function Home() {
-  const { data: villages } = useContractRead({
+  const { data: villagesTotalSupply } = useContractRead({
     address: OnchainConfig.contracts.village,
     abi: VillageContractABI.abi,
-    functionName: "tokenURIs",
-    args: [[1, 2]],
+    functionName: "totalSupply",
     enabled: true,
   });
 
+  const { data: villages, refetch } = useContractRead({
+    address: OnchainConfig.contracts.village,
+    abi: VillageContractABI.abi,
+    functionName: "tokenURIs",
+    args: [
+      Array(Number(villagesTotalSupply))
+        .fill(null)
+        .map((_, i) => i + 1),
+    ],
+    enabled: false,
+  });
+
+  console.log(villagesTotalSupply);
+
   const [villageNftMetadata, setVillageNftMetadata] =
     useState<TVillageMetadata[]>();
+
+  useEffect(() => {
+    villagesTotalSupply && refetch();
+  }, [villagesTotalSupply]);
 
   useEffect(() => {
     villages &&

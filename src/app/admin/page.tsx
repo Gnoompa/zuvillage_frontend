@@ -76,9 +76,9 @@ export default function Home() {
   }, [connectedAddress]);
 
   useEffect(() => {
-    villageHeadStatus &&
-      Number(villageHeadStatus) == 1 &&
-      setIsConnectedAddressAVillageHead(true);
+    setIsConnectedAddressAVillageHead(
+      !!(villageHeadStatus && Number(villageHeadStatus) == 1)
+    );
   }, [villageHeadStatus]);
 
   useEffect(() => {
@@ -276,19 +276,27 @@ export default function Home() {
         <p style={{ color: "#222", textAlign: "center", fontWeight: "bold" }}>
           Not a village head<br></br>
           <br></br>
-          Feel free to apply <a style={{ color: "red" }}>here</a>
+          Feel free to apply{" "}
+          <a
+          target="_blank"
+            style={{ color: "red" }}
+            href="https://forms.gle/GrsvEY6sLB1HzHhRA"
+          >
+            here
+          </a>
         </p>
       ) : (
         ""
       )}
-
-      <button
-        onClick={onMintButtonClick}
-        style={{ padding: "1rem 2rem" }}
-        disabled={!isAbleToMintVillage}
-      >
-        {isLoadingContractVillageMint ? "Minting..." : "MINT VILLAGE NFT"}
-      </button>
+      {isConnectedAddressAVillageHead && (
+        <button
+          onClick={onMintButtonClick}
+          style={{ padding: "1rem 2rem" }}
+          disabled={!isAbleToMintVillage}
+        >
+          {isLoadingContractVillageMint ? "Minting..." : "MINT VILLAGE NFT"}
+        </button>
+      )}
     </main>
   );
 }
